@@ -1,64 +1,84 @@
-<div ng-controller="partnerships">
-	<div class="row" ng-init="setup()">
-		<% @partnership.users.each do |user| %>
-		<div class="col-md-4">
-			<div class="row">
-				<div class="user-card">
-					<div>
-						<h4><%= user.name %></h4>
-					</div>
-					<div>
-						<p><%= user.email %></p>
-					</div>
-					<div>
-						<p><%= user.user_partnerships[0].total_spent %></p>
-					</div>
-					<div>
-					<%= form_tag('/expenses', method: :post) do %>
-						<div class="group-form">
-						<%= text_field_tag :expense_description, nil, placeholder: "5.43 on Widgets", class: "form-control" %>
-						<%= hidden_field_tag :user, user.id %>
-						<%= hidden_field_tag :partnership, @partnership.id %>
-						</div>
-					<% end %>
-					</div>
-				</div>
-			</div>
+<div class="row">
+	<% @partnership.users.each do |user| %>
+  	<div class="col-md-4">
+  	  <div class="panel panel-default">
+        <div class="panel-body">
+          <div>
+  					<h4><%= user.name %></h4>
+  				</div>
+  				<div>
+  					<p><%= user.email %></p>
+  				</div>
+  				<div>
+  					<p><%= user.user_partnerships[0].total_spent %></p>
+  				</div>
+  				<div>
+  				<%= form_tag('/expenses', method: :post) do %>
+  					<div class="group-form">
+    					<%= text_field_tag :expense_description, nil, placeholder: "5.43 on Widgets", class: "form-control" %>
+    					<%= hidden_field_tag :user, user.id %>
+    					<%= hidden_field_tag :partnership, @partnership.id %>
+  					</div>
+  				<% end %>
+  				</div>
+        </div>
+      </div>
 		</div>
-		<% end %>
-		<div class="col-md-4">
-			<div class="add-roommate-card">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true" type="button" data-toggle="modal" data-target="#myModal"></span>
-			</div>
-		</div>
+	<% end %>
+	<div class="col-md-4">
+	  <div class="panel panel-default">
+      <div class="add-roommate-card" type="button" data-toggle="modal" data-target="#myModal">
+			  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		  </div>
+    </div>
 	</div>
+</div>
 
+<div class="panel panel-default">
+<!-- Default panel contents -->
+  <div class="panel-heading">Recent Expenses</div>
+  <!-- Table -->
+  <table class="table table-hover table-condensed">
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Description</th>
+      <th>Date</th>
+    </tr>
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.user.name if expense.user %></td>
+        <td><%= expense.value %></td>
+        <td><%= expense.description %></td>
+        <td><%= expense.created_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 
-  <%= form_tag('/partnerships/add_member', method: :post) do %>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Add A Member</h4>
-          </div>
-          <div class="modal-body">
-            
-    					<div class="group-form">
-      					<%= text_field_tag :firstname, nil, placeholder: "first name", class: "form-control" %>
-      					<%= text_field_tag :lastname, nil, placeholder: "last name", class: "form-control" %>
-      					<%= email_field_tag :email, nil, placeholder: "email", class: "form-control" %>
-      					<%= hidden_field_tag :partnership, @partnership.id %>
-    					</div>
-    					
-    				</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add to Partnership</button>
-          </div>
+<%= form_tag('/partnerships/add_member', method: :post) do %>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add a Member to <%= @partnership.name %></h4>
+        </div>
+        <div class="modal-body">
+          
+  					<div class="group-form">
+    					<%= text_field_tag :firstname, nil, placeholder: "first name", class: "form-control" %>
+    					<%= text_field_tag :lastname, nil, placeholder: "last name", class: "form-control" %>
+    					<%= email_field_tag :email, nil, placeholder: "email", class: "form-control" %>
+    					<%= hidden_field_tag :partnership, @partnership.id %>
+  					</div>
+  					
+  				</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
         </div>
       </div>
     </div>
-  <% end %>
-  
-</div>
+  </div>
+<% end %>

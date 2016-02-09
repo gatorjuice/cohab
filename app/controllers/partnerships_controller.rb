@@ -15,6 +15,7 @@ class PartnershipsController < ApplicationController
 
 	def show
 		@partnership = Partnership.find(params[:id])
+		@expenses = Expense.where(partership_id: @partnership.id).order(:created_at).reverse
 	end
 
 
@@ -28,7 +29,7 @@ class PartnershipsController < ApplicationController
 			password: ""
 		)
 		@user.save
-		puts @user.id
+
 		@user_partnership = UserPartnership.new(
 		  user_id: @user.id,
 		  partnership_id: params[:partnership]
