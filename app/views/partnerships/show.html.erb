@@ -1,0 +1,35 @@
+<div ng-controller="partnerships">
+	<div class="row" ng-init="setup()">
+		<% @partnership.users.each do |user| %>
+		<div class="col-md-4">
+			<div class="row">
+				<div class="user-card">
+					<div>
+						<h4><%= user.name %></h4>
+					</div>
+					<div>
+						<p><%= user.email %></p>
+					</div>
+					<div>
+						<p><%= user.user_partnerships[0].total_spent %></p>
+					</div>
+					<div>
+					<%= form_tag('/expenses', method: :post) do %>
+						<div class="group-form">
+						<%= text_field_tag :expense_description, nil, placeholder: "5.43 on Widgets", class: "form-control" %>
+						<%= hidden_field_tag :user, user.id %>
+						<%= hidden_field_tag :partnership, @partnership.id %>
+						</div>
+					<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% end %>
+		<div class="col-md-4">
+			<div class="add-roommate-card">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true" ng-click="addRoommate()"></span>
+			</div>
+		</div>
+	</div>
+</div>
