@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row new-partnership-form">
 	<div class="col-xs-6 col-xs-offset-3">
 		<%= form_tag('/partnerships', method: :post) do %>
 		<fieldset class="form-group">
 			<%= label_tag :name, "What's your team name?" %>
-			<%= text_field_tag :name, nil, class: "form-control", placeholder: "the odd couple" %>
+			<%= text_field_tag :name, nil, class: "form-control", placeholder: "the odd couple", size: "20" %>
 		</fieldset>
 		<fieldset>
 			<%= submit_tag "Get Started", class: 'btn btn-success' %>
