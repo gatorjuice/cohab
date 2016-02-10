@@ -1,16 +1,13 @@
 <div class="row">
 	<% @partnership.users.each do |user| %>
-  	<div class="col-md-4">
+  	<div class="col-sm-4">
   	  <div class="panel panel-default">
         <div class="panel-body">
           <div>
   					<h4><%= user.name %></h4>
   				</div>
   				<div>
-  					<p><%= user.email %></p>
-  				</div>
-  				<div>
-  					<p><%= user.user_partnerships[0].total_spent %></p>
+  					<p>Total Spent: <%= user.user_partnerships[0].total_spent %></p>
   				</div>
   				<div>
   				<%= form_tag('/expenses', method: :post) do %>
@@ -25,7 +22,7 @@
       </div>
 		</div>
 	<% end %>
-	<div class="col-md-4">
+	<div class="col-sm-4">
 	  <div class="panel panel-default">
       <div class="add-roommate-card" type="button" data-toggle="modal" data-target="#myModal">
 			  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

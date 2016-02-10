@@ -6,7 +6,7 @@ class ExpensesController < ApplicationController
 		description = expense_description.delete(price).strip
 		@expense = Expense.new(
 			user_id: params[:user],
-			partership_id: params[:partnership],
+			partnership_id: params[:partnership],
 			value: price,
 			description: description
 		)
