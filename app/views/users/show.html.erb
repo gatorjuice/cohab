@@ -1,0 +1,4 @@
+<h2>My Partnerships</h2>
+<% @user.partnerships.each do |partnership| %>
+	<h3><%= link_to partnership.name, "/partnerships/#{partnership.id}" %></h3>
+<% end %>

@@ -4,7 +4,7 @@
 	<title>Cohab</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<%= stylesheet_link_tag    'application', media: 'all' %>
 	<%= javascript_include_tag 'application' %>
 	<%= csrf_meta_tags %>
@@ -15,6 +15,30 @@
 			<h1>Cohab <small>stay balanced.</small></h1>
 		</div>
 		<%= yield %>
+		<div class="login">
+			<% unless session[:current_user] %>
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#loginModal">Login</button>
+			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<%= form_tag('/users', method: :patch) do %>
+						<fieldset class="group-form">
+							<%= label_tag :email %>
+							<%= email_field_tag :email, nil, class: "form-control" %>
+						</fieldset>	
+						<fieldset class="group-form">
+							<%= label_tag :password %>
+							<%= password_field_tag :password, nil, class: "form-control" %>
+						</fieldset>
+						<%= submit_tag "login", class: "btn btn-info" %>	
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<% else %>
+			<%= link_to "logout", "/users", method: :delete, class: "btn btn-info" %>	
+			<% end %>
+		</div>
 	</div>
 </body>
 </html>

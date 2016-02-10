@@ -28,10 +28,10 @@ class PartnershipsController < ApplicationController
 		@user = User.new(
 			firstname: params[:firstname],
 			lastname: params[:lastname],
-			email: params[:email],
-			password: ""
+			email: params[:email]
 		)
-		@user.save
+		@user.password = params[:password]
+		@user.save!
 
 		@user_partnership = UserPartnership.new(
 		  user_id: @user.id,
